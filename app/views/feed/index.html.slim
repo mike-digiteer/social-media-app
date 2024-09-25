@@ -1,0 +1,8 @@
+.flex.flex-col.items-center
+  - @featured_posts.each do |post|
+    = render 'feed/post', post: post
+
+  h1.text-medium.font-bold.mb-4
+    | Recent Posts
+  - @recent_posts.each do |post|
+    = render 'feed/post', post: post

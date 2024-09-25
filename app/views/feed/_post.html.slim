@@ -1,0 +1,41 @@
+.flex.bg-white.shadow-lg.rounded-lg.mx-4.md:mx-auto.max-w-md.md:max-w-2xl.mb-4
+  .flex.items-start.px-4.py-6
+    /img.w-12.h-12.rounded-full.object-cover.mr-4.shadow[src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="avatar"]
+    .w-12.h-12.rounded-full.object-cover.mr-4.shadow.flex.justify-center.items-center
+      iconify-icon icon="mdi:account-circle" width="50" height="50"  style="color: gray"
+    div
+      .flex.items-center.justify-between
+        h2.text-lg.font-semibold.text-gray-900.-mt-1 = post.user.email
+        .flex.space-x-2
+          - if post.featured?
+            small.text-sm.text-yellow-700.font-bold
+              | Featured
+          - if !post.active
+            small.text-sm.text-gray-500.font-bold
+              | Hidden
+          - if post.publish_date > Time.now
+            small.text-sm.text-blue-500.font-bold
+              | Scheduled
+      p.text-gray-700
+        | #{post.publish_date.strftime("%b %d, %Y")} - #{post.publish_date.strftime("%I:%M %p")}
+      p.mt-3.text-gray-700.text-sm = post.body
+      - if current_user && current_user.admin? || current_user == post.user
+        .mt-4.flex.items-center
+          = link_to edit_post_path(post), class: "flex rounded p-1 mr-2 text-gray-700 text-sm mr-3 hover:bg-gray-100"
+            iconify-icon icon="mdi:pencil" width="20" height="20"  style="color: gray"
+            span.ml-2
+              | Edit
+          = button_to @post, method: :delete, class: "flex rounded p-1 mr-2 text-gray-700 text-sm mr-3 hover:bg-gray-100"
+            iconify-icon icon="mdi:trash" width="20" height="20"  style="color: gray"
+            span.ml-2
+              | Delete
+        / .flex.mr-2.text-gray-700.text-sm.mr-8
+      /     svg.w-4.h-4.mr-1[fill="none" viewbox="0 0 24 24" stroke="currentColor"]
+      /       path[stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"]
+      /     span
+      /       | 8
+      /   .flex.mr-2.text-gray-700.text-sm.mr-4
+      /     svg.w-4.h-4.mr-1[fill="none" viewbox="0 0 24 24" stroke="currentColor"]
+      /       path[stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"]
+      /     span
+      /       | share

@@ -1,0 +1,11 @@
+.w-56.h-screen.shadow-lg.sticky.top-0
+  .p-6.space-y-4
+    = link_to root_path,  class: "flex items-center" do
+      iconify-icon icon="mdi:home" width="20" height="20"  style="color: black"
+      span.text-sm.font-semibold.text-gray-800.ml-2
+        | Feed
+    - if current_user
+      = link_to manage_path,  class: "flex items-center" do
+        iconify-icon icon="mdi:view-dashboard" width="20" height="20"  style="color: black"
+        span.text-sm.font-semibold.text-gray-800.ml-2
+          | Manage

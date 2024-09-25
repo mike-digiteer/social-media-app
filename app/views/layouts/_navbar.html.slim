@@ -1,0 +1,13 @@
+.h-14.w-screen.bg-white.shadow-md.flex.items-center.sticky.top-0
+  .flex.justify-between.items-center.h-full.w-full.px-8
+    .flex.items-center
+      = link_to root_path, class: 'flex items-center' do
+        span.text-lg.font-semibold.text-gray-800
+          | Social Media App
+    .flex.items-center
+      - if current_user
+        = link_to 'Profile', edit_user_registration_path, class: 'text-gray-800 font-semibold'
+        = button_to 'Logout', destroy_user_session_path, method: :delete, class: 'ml-4 text-gray-800 font-semibold'
+      - else
+        = link_to 'Login', new_user_session_path, class: 'text-gray-800 font-semibold'
+        = link_to 'Sign up', new_user_registration_path, class: 'ml-4 text-gray-800 font-semibold'

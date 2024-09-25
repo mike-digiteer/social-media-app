@@ -1,0 +1,44 @@
+doctype html
+html
+head
+  title = content_for(:title) || "Social Media App"
+  meta name="viewport" content="width=device-width,initial-scale=1"
+  meta name="apple-mobile-web-app-capable" content="yes"
+  = csrf_meta_tags
+  = csp_meta_tag
+
+  = yield :head
+
+  link rel="manifest" href="/manifest.json"
+  link rel="icon" href="/icon.png" type="image/png"
+  link rel="icon" href="/icon.svg" type="image/svg+xml"
+  link rel="apple-touch-icon" href="/icon.png"
+  = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
+  = stylesheet_link_tag "application", "data-turbo-track": "reload"
+  = javascript_importmap_tags
+
+body
+  main.background.h-screen.w-screen.overflow-y-scroll
+    - if notice
+      .absolute.right-0.top-16.mr-2
+        .flex.justify-center.items-center.h-12.bg-green-100.p-4.rounded-md.border.border-green-300
+          iconify-icon icon="ic:baseline-check" width="20" height="20"  style="color: green"
+          p.text-green-800.font-semibold.ml-2
+            = notice
+    - if alert
+      .absolute.right-0.top-16.mr-2
+        .flex.justify-center.items-center.h-12.bg-red-100.p-4.rounded-md.border.border-red-300
+          iconify-icon icon="ic:baseline-error" width="20" height="20"  style="color: red"
+          p.text-red-800.font-semibold.ml-2
+            = alert
+    = render partial: "layouts/navbar"
+    - if current_user
+      .absolute.right-14.bottom-14
+        = link_to new_post_path do 
+          .flex.justify-center.items-center.h-12.w-12.bg-black.text-white.rounded-full
+            iconify-icon icon="mdi:plus" width="20" height="20"
+    .flex
+      - if current_user
+          = render partial: "layouts/sidebar"
+      .p-8.h-full.w-full
+        = yield
