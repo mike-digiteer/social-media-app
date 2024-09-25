@@ -69,6 +69,10 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:body, :active, :featured, :publish_date)
+      if current_user.admin?
+        params.require(:post).permit(:body, :active, :featured, :publish_date)
+      else
+        params.require(:post).permit(:body, :publish_date)
+      end
     end
 end
